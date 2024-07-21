@@ -49,7 +49,7 @@ function App() {
       try {
         console.log('Calling totalSupply...')
         const totalSupply = await realEstate.totalsupply()
-        console.log('Total supply:', totalSupply)
+        console.log('Total supply:', totalSupply.toString())
 
         const homes = []
 
