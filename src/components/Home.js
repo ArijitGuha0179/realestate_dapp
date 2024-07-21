@@ -46,7 +46,7 @@ const Home = ({ home, provider, account, escrow, togglePop }) => {
         const inspector = await escrow.inspector()
         setInspector(inspector)
 
-        const hasInspected = await escrow.inspectionPassed(home.id)
+        const hasInspected = await escrow.inspect(home.id)
         setHasInspected(hasInspected)
     }
 
@@ -66,7 +66,7 @@ const Home = ({ home, provider, account, escrow, togglePop }) => {
         await transaction.wait()
 
         // Buyer approves...
-        transaction = await escrow.connect(signer).approveSale(home.id)
+        transaction = await escrow.connect(signer).approve(home.id)
         await transaction.wait()
 
         setHasBought(true)
@@ -76,7 +76,7 @@ const Home = ({ home, provider, account, escrow, togglePop }) => {
         const signer = await provider.getSigner()
 
         // Inspector updates status
-        const transaction = await escrow.connect(signer).updateInspectionStatus(home.id, true)
+        const transaction = await escrow.connect(signer).inspection(home.id, true)
         await transaction.wait()
 
         setHasInspected(true)
@@ -86,12 +86,12 @@ const Home = ({ home, provider, account, escrow, togglePop }) => {
         const signer = await provider.getSigner()
 
         // Lender approves...
-        const transaction = await escrow.connect(signer).approveSale(home.id)
+        const transaction = await escrow.connect(signer).approve(home.id)
         await transaction.wait()
 
         // Lender sends funds to contract...
         const lendAmount = (await escrow.purchasePrice(home.id) - await escrow.escrowAmount(home.id))
-        await signer.sendTransaction({ to: escrow.address, value: lendAmount.toString(), gasLimit: 60000 })
+        await signer.sendTransaction({ to: escrow.target, value: lendAmount.toString(), gasLimit: 60000 })
 
         setHasLended(true)
     }
@@ -100,11 +100,11 @@ const Home = ({ home, provider, account, escrow, togglePop }) => {
         const signer = await provider.getSigner()
 
         // Seller approves...
-        let transaction = await escrow.connect(signer).approveSale(home.id)
+        let transaction = await escrow.connect(signer).approve(home.id)
         await transaction.wait()
 
         // Seller finalize...
-        transaction = await escrow.connect(signer).finalizeSale(home.id)
+        transaction = await escrow.connect(signer).quicksale(home.id)
         await transaction.wait()
 
         setHasSold(true)
