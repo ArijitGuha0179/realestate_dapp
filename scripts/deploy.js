@@ -15,7 +15,7 @@ async function main(){
     console.log(`Deployed Real Estate Contract at:${realEstate.target}`);
     console.log(`Minting 3 properties...\n`);
     for(let i=0;i<3;i++){
-        let transaction = await realEstate.connect(seller).safeMint(`https://ipfs.io/ipfs/QmTudSYeM7mz3PkYEWXWqPjomRPHogcMFSq7XAvsvsgAPS/${i+1}.json`);
+        let transaction = await realEstate.connect(seller).safeMint(`https://ipfs.io/ipfs/QmdGJNJwL9aN1E25iAc8L2aR33SFQ8e2qDrnc7V26WJm2d?filename=${i+1}.json`);
         await transaction.wait()
     }
     const Escrow=await ethers.getContractFactory('Escrow');

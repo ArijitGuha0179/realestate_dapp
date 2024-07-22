@@ -19,7 +19,7 @@ describe('Escrow',()=>{
     //console.log(realEstate.target);
     //console.log(realEstate.address);
     //mint NFT
-    let transaction = await realEstate.connect(seller).safeMint("https://ipfs.io/ipfs/QmTudSYeM7mz3PkYEWXWqPjomRPHogcMFSq7XAvsvsgAPS")
+    let transaction = await realEstate.connect(seller).safeMint("https://ipfs.io/ipfs/QmdGJNJwL9aN1E25iAc8L2aR33SFQ8e2qDrnc7V26WJm2d/")
     await transaction.wait()
     // console.log("RealEstate address:", realEstate.address);
     // console.log("Seller address:", seller.address);
