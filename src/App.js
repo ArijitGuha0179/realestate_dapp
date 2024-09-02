@@ -54,21 +54,13 @@ function App() {
         const homes = []
 
         for (var i = 1; i <= totalSupply; i++) {
-          console.log(`Fetching token ${i} URI...`)
           const uri = await realEstate.tokenURI(i)
-          console.log(`Token ${i} URI:`, uri)
-          
-          try {
-            const response = await fetch(uri)
-            if (!response.ok) {
-              throw new Error(`HTTP error! status: ${response.status}`)
-            }
-            const metadata = await response.json()
-            console.log(`Token ${i} metadata:`, metadata)
-            homes.push(metadata)
-          } catch (error) {
-            console.error(`Error fetching metadata for token ${i}:`, error)
-          }
+          console.log('Token URI:', uri)
+          const response = await fetch(uri)
+          console.log(`Metadata for Token ID ${i}:`, response);
+          const metadata = await response.json()
+          console.log(`Metadata for Token ID ${i}:`, metadata);
+          homes.push(metadata)
         }
 
         setHomes(homes)
